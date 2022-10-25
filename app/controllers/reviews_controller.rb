@@ -19,7 +19,11 @@ class ReviewsController < ApplicationController
     # POST /reviews
     def create
         review = Review.create(review_params)
-        render json: review, status: :created
+        if review.valid?
+            render json: review, status: :created
+        else
+            render json: {errors: review.errors.full_messages}, status: :unprocessable_entity
+        end
     end
     
     # PATCH /reviews/:id
@@ -27,7 +31,11 @@ class ReviewsController < ApplicationController
         review = Reviews.find(id: params[:id])
         if review
             review.update(review_params)
-            render json: review, status: :updated
+            if review.valid?
+                render json: review, status: :updated
+            else
+                render json: {errors: review.errors.full_messages}, status: :unprocessable_entity
+            end
         else
             render json: {error: "Review not found"}, status: :not_found
         end

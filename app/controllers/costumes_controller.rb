@@ -19,7 +19,11 @@ class CostumesController < ApplicationController
     # POST /costumes
     def create
         costume = Costume.create(costume_params)
-        render json: costume, status: :created
+        if costume.valid?
+            render json: costume, status: :created
+        else
+            render json: {errors: costume.errors.full_messages}, status: :unprocessable_entity
+        end
     end
 
     # PATCH /costumes/:id
@@ -27,7 +31,11 @@ class CostumesController < ApplicationController
         costume = Costume.find(id: params[:id])
         if costume
             costume.update(costume_params)
-            render json: costume, status: :updated
+            if costum.valid?
+                render json: costume, status: :updated
+            else
+                render json: {errors: costume.errors.full_messages}, status: :unprocessable_entity
+            end
         else
             render json: {error: "Costume not found"}, status: :not_found
         end
