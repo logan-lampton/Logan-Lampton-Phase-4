@@ -10,6 +10,12 @@ function App() {
       .then((data) => setCount(data.count));
   }, []);
 
+  useEffect(() => {
+    fetch("/costumes")
+      .then((r) => r.json())
+      .then((costumes) => console.log(costumes));
+  }, []);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -19,6 +25,7 @@ function App() {
           </Route>
           <Route path="/">
             <h1>Page Count: {count}</h1>
+            <h2>Testing!</h2>
           </Route>
         </Switch>
       </div>
