@@ -8,7 +8,7 @@ end
 
 # GET /users/:id
 def show
-    user = User.find(id: params[:id])
+    user = User.find_by(id: params[:id])
     if user
         render json: user, status: :ok
     else
@@ -24,10 +24,10 @@ end
 
 # PATCH /users/:id
 def update
-    user = User.find(id: params[:id])
+    user = User.find_by(id: params[:id])
     if user
         user.update(user_params)
-        render json: user, status: :updated
+        render json: user, status: :ok
     else
         render json: {error: "User not found"}, status: :not_found
     end
@@ -35,7 +35,7 @@ end
 
 # DELETE /user/:id
 def destroy
-    user = User.find(id: params[:id])
+    user = User.find_by(id: params[:id])
     if user
         user.destroy
         head :no_content

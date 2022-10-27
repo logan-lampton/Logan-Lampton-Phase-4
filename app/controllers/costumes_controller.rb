@@ -8,7 +8,7 @@ class CostumesController < ApplicationController
 
     # GET /costumes/:id
     def show
-        costume = Costume.find(id: params[:id])
+        costume = Costume.find_by(id: params[:id])
         if costume
             render json: costume, status: :ok
         else
@@ -28,11 +28,11 @@ class CostumesController < ApplicationController
 
     # PATCH /costumes/:id
     def update
-        costume = Costume.find(id: params[:id])
+        costume = Costume.find_by(id: params[:id])
         if costume
             costume.update(costume_params)
-            if costum.valid?
-                render json: costume, status: :updated
+            if costume.valid?
+                render json: costume, status: :ok
             else
                 render json: {errors: costume.errors.full_messages}, status: :unprocessable_entity
             end
@@ -43,10 +43,10 @@ class CostumesController < ApplicationController
 
     # DELETE /costume/:id
     def destroy
-        costume = Costume.find(id: params[:id])
+        costume = Costume.find_by(id: params[:id])
         if costume
             costume.destroy
-            head :no_content
+            render json: {}, status: :no_content
         else
             render json: {error: "Costume not found"}, status: :not_found
         end

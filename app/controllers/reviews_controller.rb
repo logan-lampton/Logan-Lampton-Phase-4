@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
     
     # GET /review/:id
     def show
-        review = Review.find(id: params[:id])
+        review = Review.find_by(id: params[:id])
         if review
             render json: review, status: :ok
         else
@@ -28,11 +28,11 @@ class ReviewsController < ApplicationController
     
     # PATCH /reviews/:id
     def update
-        review = Reviews.find(id: params[:id])
+        review = Reviews.find_by(id: params[:id])
         if review
             review.update(review_params)
             if review.valid?
-                render json: review, status: :updated
+                render json: review, status: :ok
             else
                 render json: {errors: review.errors.full_messages}, status: :unprocessable_entity
             end
@@ -43,7 +43,7 @@ class ReviewsController < ApplicationController
     
     # DELETE /review/:id
     def destroy
-        review = Review.find(id: params[:id])
+        review = Review.find_by(id: params[:id])
         if review
             review.destroy
             head :no_content
