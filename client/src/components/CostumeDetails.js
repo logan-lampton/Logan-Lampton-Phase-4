@@ -42,6 +42,25 @@ function CostumeDetails({ user, costume, onDeleteCostume, onUpdateCostume }){
       })
     }
 
+    // post request to the create method of the reviews controller
+    function handleAddReview(event){
+      event.preventDefault()
+      fetch(`/costumes/${id}/reviews`, {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              user_id: user.id,
+              costume_id: costume.id,
+              written_review: event.target.written_review.value,
+              rating: event.target.rating.value
+          })
+      })
+      .then(response => response.json())
+      .then(newReview => setReviews([...reviews, newReview]))
+  }
+
     console.log(reviews)
 
     return (
@@ -61,6 +80,12 @@ function CostumeDetails({ user, costume, onDeleteCostume, onUpdateCostume }){
               <p>Written Review: {review.written_review}</p>
               </>
             )}
+            <h2>Add Review:</h2>
+            <form onSubmit={handleAddReview}>
+              <input type="number" name="rating" placeholder="rating number" className="form"/>
+              <input type="text" name="written_review" placeholder='written review' className="form"/>
+              <button type="submit">Add Review</button>
+            </form>
             <h2>Purchase here: {link}</h2>
             <button onClick={handleDeleteClick}>Delete</button>
             <br></br>

@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {useHistory} from 'react-router-dom'
-import {Form} from './Form'
 
 function SignUp({updateUser}) {
     const [formData, setFormData] = useState({
@@ -48,7 +47,7 @@ function SignUp({updateUser}) {
         <form onSubmit={onSubmit}>
         <label>
           Username
-          </label>  
+        </label>  
           <input type='text' name='name' value={name} onChange={handleChange} />
        
         <label>
