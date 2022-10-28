@@ -2,7 +2,8 @@ class ReviewsController < ApplicationController
     
     # GET /reviews
     def index
-        reviews = Review.all
+        costume = Costume.find(params[:costume_id])
+        reviews = Review.where(costume_id: costume.id)
         render json: reviews, status: :ok
     end
     
@@ -18,7 +19,7 @@ class ReviewsController < ApplicationController
     
     # POST /reviews
     def create
-        review = Review.create(review_params)
+        review = Review.create!(review_params)
         if review.valid?
             render json: review, status: :created
         else

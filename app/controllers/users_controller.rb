@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+skip_before_action :authorized_user, only: [:create]
 
  # GET /users
  def index
@@ -8,7 +9,7 @@ end
 
 # GET /users/:id
 def show
-    user = User.find_by(id: params[:id])
+    user = current_user || User.find_by(id: params[:id])
     if user
         render json: user, status: :ok
     else
@@ -18,7 +19,7 @@ end
 
 # POST /users
 def create
-    user = User.create(user_params)
+    user = User.create!(user_params)
     render json: user, status: :created
 end
 
@@ -47,7 +48,7 @@ end
 private
 
 def user_params
-    params.permit(:first_name, :last_name, :email, :password)
+    params.permit(:name, :email, :password, :password_confirmation)
 end
 
 end

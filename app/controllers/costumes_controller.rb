@@ -18,7 +18,7 @@ class CostumesController < ApplicationController
 
     # POST /costumes
     def create
-        costume = Costume.create(costume_params)
+        costume = Costume.create!(costume_params)
         if costume.valid?
             render json: costume, status: :created
         else

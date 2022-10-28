@@ -12,6 +12,9 @@ gem 'pg'
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
+# I like pry a whole bunch hell yeaaaah
+gem 'pry', '~> 0.13.1'
+
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 

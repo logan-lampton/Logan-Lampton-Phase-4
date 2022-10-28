@@ -1,12 +1,27 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import CostumeList from "./CostumeList"
-import CreateCostumeForm from "./CreateCostumeForm"
+import CostumeList from "./components/CostumeList"
+import CreateCostumeForm from "./components/CreateCostumeForm"
+import Login from "./components/LogIn";
 // import UpdateCostumeForm from "./UpdateCostumeForm"
-import Navbar from "./Navbar"
+import Navbar from "./components/Navbar"
+import SignUp from "./components/SignUp"
 
 function App() {
   const [costumes, setCostumes] = useState([])
+  const [currentUser, setCurrentUser] = useState(false)
+  console.log("current user?: ", currentUser)
+
+  useEffect(() => {
+    fetch('/authorized_user')
+    .then(res => {
+      if(res.ok){
+        res.json().then(user => {
+          updateUser(user)
+        })
+      }
+    })
+  },[])
 
   useEffect(() => {
     fetch("/costumes")
@@ -35,13 +50,24 @@ function App() {
     setCostumes(updatedCostumeArray);
   }
 
+  const updateUser = (user) => setCurrentUser(user)
+
   return (
     <BrowserRouter>
       <div className="App">
-      <Navbar />
+      <Navbar currentUser={currentUser} updateUser={updateUser}/>
+      <Route path="/signup">
+        <SignUp updateUser={updateUser}/>
+      </Route>
+      <Route path='/login'>
+            <Login updateUser={updateUser}/>
+          </Route>
+      {!currentUser ? 
+        <h2>Please sign up or log in</h2> : 
         <Switch>
           <Route exact path="/">
-            <CostumeList 
+            <CostumeList
+              user={currentUser}
               costumes={costumes}
               onDeleteCostume={handleDeleteCostume}
               onUpdateCostume={handleUpdateCostume}
@@ -50,16 +76,17 @@ function App() {
           <Route exact path="/form">
             <CreateCostumeForm onAddCostume={onAddCostume}/>
           </Route>
-          {/* <Route exact path="/costumes/:id">
-            <UpdateCostumeForm/>
-          </Route> */}
-          <Route path="/favorites">
+          {/* <Route path="/favorites">
               <h1>Your favorite costumes</h1>
+          </Route> */}
+          <Route exact path="/users/:id">
+            <h2>Hello {currentUser.name}</h2>
           </Route>
           <Route path="*">
             <h1>404: Page Not Found!</h1>
           </Route>  
         </Switch>
+      }
       </div>
     </BrowserRouter>
   )

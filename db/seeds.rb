@@ -7,9 +7,9 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # Test User seeds
-User.create(first_name: 'Logan', last_name: 'Lampton', email: 'lampton.logan@gmail.com', password: 'logan123')
-User.create(first_name: 'Blake', last_name: 'Lampton', email: 'bslampton@gmail.com', password: 'blake123')
-User.create(first_name: 'Emily', last_name: 'Waggoner', email: 'emily.waggoner@gmail.com', password: 'emily123')
+User.create(name: 'Logan', email: 'lampton.logan@gmail.com', password_digest: 'logan123')
+User.create(name: 'Blake', email: 'bslampton@gmail.com', password_digest: 'blake123')
+User.create(name: 'Emily', email: 'emily.waggoner@gmail.com', password_digest: 'emily123')
 
 # Test Costume seeds
 Costume.create(name: 'Deluxe Marvel Avengers Endgame Men\'s Thor Costume', price: 99.99, description: 'If you want to transform into the Asgardian hero, then look no further! This Avengers: Endgame Thor Costume is a deluxe costume from the Marvel Cinematic Universe and it\'s the best way to dress like your favorite superhero. The costume comes with a full jumpsuit that has printed details to recreate Thor\'s armor. It also has a muscle padded chest and arms to help give you a true Asgardian physique. The legs feature boot covers, which allow you to wear your favorite pair of shoes with the outfit and the bright red cape puts the finishing touch to the whole look!', image: 'https://images.halloweencostumes.com/products/57743/1-2/deluxe-avengers-endgame-mens-thor-costume.jpg', link: 'https://www.halloweencostumes.com/avengers-endgame-adult-thor-deluxe-costume.html')
